@@ -1,4 +1,4 @@
-#include <M5StickC.h>
+#include <M5StickC.h> //change this line to #include <M5StickCPlus.h> if you are using the M5Stick-C Plus
 #include <WiFi.h>
 #include <WebServer.h>
 #include "Lumix.h"
