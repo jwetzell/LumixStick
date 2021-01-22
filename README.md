@@ -3,6 +3,7 @@ Lumix Camera Control for M5StickC
 
 ## Use
 * Edit sketch with access point information and camera IP (can be changed later)
+* If you are using an M5StickC-Plus then change the first line to `#include <M5StickCPlus.h>`
 * Flash sketch and restart M5StickC
 * Once M5StickC is connected to WiFi the circular icon will indicate camera connection status.
   * Red = Disabled
@@ -17,4 +18,3 @@ Lumix Camera Control for M5StickC
 * More UI things
   * Camera Info
   * Settings (Cam IP, Stick IP)
-  * WiFi Status
