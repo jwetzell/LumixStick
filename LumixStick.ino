@@ -1,10 +1,6 @@
 #include <M5StickC.h>
 #include <WiFi.h>
-
 #include <WebServer.h>
-
-#include <FS.h>
-#include <SPIFFS.h>
 #include "Lumix.h"
 
 // Put your wifi SSID and password here
@@ -41,43 +37,40 @@ void handleSave(){
   }
 }
 
-void handleNotFound() {
-  String message = "File Not Found\n\n";
-  message += "URI: ";
-  message += server.uri();
-  message += "\nMethod: ";
-  message += (server.method() == HTTP_GET) ? "GET" : "POST";
-  message += "\nArguments: ";
-  message += server.args();
-  message += "\n";
-  for (uint8_t i = 0; i < server.args(); i++) {
-    message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
-  }
-  server.send(404, "text/plain", message);
-}
-
 // the setup routine runs once when M5StickC starts up
 void setup(){
   M5.begin();
   M5.Lcd.fillScreen(BLACK);
+  updateCameraStatusIndicator();
+  
   Serial.begin(115200);
   
   WiFi.begin(ssid,password);
   Serial.print("WiFi Connecting");
   // Wait for connection
   while (WiFi.status() != WL_CONNECTED) {
-    delay(100);
     Serial.print(".");
+    delay(250);
+    drawNetworkIcon(TFT_BLACK);
+    delay(250);
+    drawNetworkIcon(TFT_WHITE);
   }
   Serial.println();
   Serial.println("WiFi Connected - " + WiFi.localIP().toString());
 
   server.on("/", handleRoot);
   server.on("/save", handleSave);
-  server.onNotFound(handleNotFound);
 
   server.begin();
   
+}
+
+void drawNetworkIcon(uint32_t color){
+  M5.Lcd.drawLine(4, 16, 4, 14, color);
+  M5.Lcd.drawLine(7, 16, 7, 12, color);
+  M5.Lcd.drawLine(10, 16, 10, 10, color);
+  M5.Lcd.drawLine(13, 16, 13, 8, color);
+  M5.Lcd.drawLine(16, 16, 16, 6, color);
 }
 
 void updateCameraStatusIndicator(){
