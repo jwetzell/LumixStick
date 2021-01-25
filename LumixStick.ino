@@ -98,7 +98,19 @@ void loop() {
   M5.update();
   server.handleClient();
   camera.update();
-  updateCameraStatusIndicator();
+  
+  if(camera.infoUpdated()){
+    Serial.println("Camera Info Changed");
+    updateCameraStatusIndicator();
+
+    //blank out name area
+    M5.Lcd.fillRect(0, (M5.Lcd.height() / 4) - (M5.Lcd.height() / 8), M5.Lcd.width(), M5.Lcd.height()/4, TFT_BLACK);
+    int datumPrevious = M5.Lcd.getTextDatum();
+    M5.Lcd.setTextDatum(MC_DATUM);
+    //draw name or ip if no name is set
+    M5.Lcd.drawString(camera.getFriendlyName(), M5.Lcd.width() / 2, M5.Lcd.height() / 4);
+    M5.Lcd.setTextDatum(datumPrevious);
+  }
   
   if(M5.BtnB.wasPressed()){
     if(!camera.isDisabled()){
