@@ -14,12 +14,16 @@ class Lumix {
     String deviceName;
     unsigned long lastKeepAlive;
 
+    bool infoUpdatedFlag;
+
   public:
     Lumix(String ip);
 
     void updateDeviceName(String deviceName);
     void updateConnectionStatus(int connectionStatus);
     void updateIp(String ip);
+
+    bool infoUpdated();
 
     bool isConnected();
     bool isConnecting();
@@ -28,7 +32,7 @@ class Lumix {
     void update();
     
     int getConnectionStatus();
-    String getDeviceName();
+    String getFriendlyName();
 
     String getBaseUrl();
     String getCaptureUrl();

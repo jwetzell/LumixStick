@@ -5,18 +5,32 @@ Lumix::Lumix(String ip){
   connectionStatus = 0;
   deviceName = "";
   lastKeepAlive = 0;
+  infoUpdatedFlag = true;
+}
+
+bool Lumix::infoUpdated(){
+  if(infoUpdatedFlag){
+    infoUpdatedFlag = false;
+    return true;
+  }
+  return false;
 }
 
 void Lumix::updateDeviceName(String deviceName){
   this->deviceName = deviceName;
+  infoUpdatedFlag = true;
 }
 
 void Lumix::updateConnectionStatus(int connectionStatus){
   this->connectionStatus = connectionStatus;
+  infoUpdatedFlag = true;
 }
 
 void Lumix::updateIp(String ip){
   this->ip = ip;
+  connectionStatus = CAMERA_CONNECTING;
+  deviceName = "";
+  infoUpdatedFlag = true;
 }
 
 bool Lumix::isConnected(){
@@ -48,8 +62,12 @@ int Lumix::getConnectionStatus(){
   return connectionStatus;
 }
 
-String Lumix::getDeviceName(){
-  return deviceName;
+String Lumix::getFriendlyName(){
+  if(isConnected()){
+    return deviceName;
+  }else{
+    return ip;
+  }
 }
 
 String Lumix::getBaseUrl(){
