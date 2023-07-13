@@ -8,7 +8,7 @@ Lumix Camera Control for M5StickC
 * Once M5StickC is connected to WiFi the circular icon will indicate camera connection status.
   * Red = Disabled
   * Yellow = Connecting
-  * Green = Conencted
+  * Green = Connected
 * The B button (side button) will enable/disable remote
 * Once connected the A button will send the capture command to the camera
 * Navigate to the IP Address of the M5StickC in a browser to change the IP of the camera
